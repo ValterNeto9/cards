@@ -26,6 +26,14 @@ defmodule Cards do
       binary = :erlang.term_to_binary( deck )
       File.write( filename, binary )
     end
+    def load( filename ) do
+        { status, binary } = File.read( filename )
+
+        case status do
+            :ok -> :erlang.binary_to_term binary
+            :error -> "File doesn't exists"    
+        end
+    end
 
     def exec( args ) do
         deck = Cards.create_deck
@@ -33,6 +41,7 @@ defmodule Cards do
         #contains?( deck, args )
         #deal( deck, args)
         #save( deck, args )
+        load( args ) 
     end
     
 end
